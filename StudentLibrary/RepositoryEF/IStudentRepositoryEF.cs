@@ -8,10 +8,10 @@ namespace EFDataAccessLayer.RepositoryEF
 {
     public  interface IStudentRepositoryEF
     {
-        public IEnumerable<StudentDetails> GetAll();
-        public StudentDetails GetById(long Id);
-        public void Create(StudentDetails data);
-        public void Update(StudentDetails value);
-        public void Delete(long Id);
+        public IEnumerable<StudentDetails> GetAllDetails();
+        public StudentDetails GetbyID(long studentid);
+        public void Insert(StudentDetails stud);
+        public void Update(int id, StudentDetails stud);
+        public void Delete(int studentId);
     }
 }

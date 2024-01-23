@@ -19,9 +19,9 @@ namespace EFDataAccessLayer
 
         public int Age { get; set; }
 
-        public bool Gender { get; set; }
+        public string Gender { get; set; }
 
-        public long Moblie { get; set; }
+        public long Mobile { get; set; }
 
         public string Email { get; set; }
 

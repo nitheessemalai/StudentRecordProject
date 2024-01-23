@@ -10,7 +10,7 @@ using StudentLibrary;
 namespace EFDataAccessLayer.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20240122085855_Student")]
+    [Migration("20240123074320_Student")]
     partial class Student
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,10 +37,10 @@ namespace EFDataAccessLayer.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Gender")
-                        .HasColumnType("bit");
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Moblie")
+                    b.Property<long>("Mobile")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using EFDataAccessLayer;
+using EFDataAccessLayer.RepositoryEF;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +12,18 @@ namespace CogentApplication.Controllers
 {
     public class StudentController : Controller
     {
-        // GET: StudentController
-        public ActionResult Index()
+        private readonly IStudentRepositoryEF _add;
+        private readonly string _connectionstring;
+        public StudentController(IStudentRepositoryEF add, IConfiguration configuration)
         {
-            return View();
+            _add = add;
+            _connectionstring = configuration.GetConnectionString("DbConnection");
+        }
+        // GET: StudentController
+        public ActionResult List()
+        {
+            var result = _add.GetAllDetails();
+            return View("List", result);
         }
 
         // GET: StudentController/Details/5
@@ -24,17 +35,27 @@ namespace CogentApplication.Controllers
         // GET: StudentController/Create
         public ActionResult Create()
         {
-            return View();
+
+            var model = new StudentDetails();
+            return View("Create", model);
         }
 
         // POST: StudentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(StudentDetails stud)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _add.Insert(stud);
+                    return RedirectToAction(nameof(List));
+                }
+                else
+                {
+                    return View("create", stud);
+                }
             }
             catch
             {
@@ -45,17 +66,28 @@ namespace CogentApplication.Controllers
         // GET: StudentController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var result = new StudentDetails();
+            return View("Edit", result);
         }
 
         // POST: StudentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, StudentDetails data)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _add.Update(id,data);
+
+                    return RedirectToAction(nameof(List));
+                }
+                else
+                {
+                    return View("Edit", data);
+                }
             }
             catch
             {
@@ -66,7 +98,8 @@ namespace CogentApplication.Controllers
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var result = 
+            return View("Delete", result);
         }
 
         // POST: StudentController/Delete/5
