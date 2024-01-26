@@ -63,11 +63,11 @@ namespace EFDataAccessLayer.RepositoryEF
                     throw;
                 }
             }
-            public StudentDetails GetbyID(long studentid)
+            public StudentDetails GetbyID(int studentid)
             {
                 try
                 {
-                    var result = _contxt.Student.FromSqlRaw<StudentDetails>($"select * from Students where StudentID={studentid}");
+                    var result = _contxt.Student.FromSqlRaw<StudentDetails>($"select * from Student where StudentID={studentid}");
                     return result.ToList().FirstOrDefault();
                 }
                 catch (Exception)

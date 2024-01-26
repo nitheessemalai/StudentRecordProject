@@ -1,4 +1,5 @@
 ﻿using EFDataAccessLayer;
+using EFDataAccessLayer.ModelEF;
 using EFDataAccessLayer.RepositoryEF;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,19 @@ namespace CogentApplication.Controllers
         // GET: StudentController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            try
+            {
+                var result = _add.GetbyID(id);
+
+                return View("Details", result);
+
+            }
+            catch
+            {
+                return View("Error");
+
+            }
+
         }
 
         // GET: StudentController/Create
@@ -66,7 +79,7 @@ namespace CogentApplication.Controllers
         // GET: StudentController/Edit/5
         public ActionResult Edit(int id)
         {
-            var result = new StudentDetails();
+            var result = _add.GetbyID(id);
             return View("Edit", result);
         }
 
@@ -98,23 +111,70 @@ namespace CogentApplication.Controllers
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            var result = 
-            return View("Delete", result);
+            var result = _add.GetbyID(id);
+            return View("Delete", result) ;
         }
 
         // POST: StudentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Deletebyid(int StudentID)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _add.Delete(StudentID);
+
+                    return RedirectToAction(nameof(List));
+                }
+                else
+                {
+                    return View("Delete");
+                }
             }
             catch
             {
                 return View();
             }
+        }
+        [HttpGet]
+        [Route("~/api/Course")]
+        public ActionResult Subject()
+        {
+            try
+            {
+                 var get = Getvalue();
+                 return Ok(get.ToList());
+            }
+            catch(Exception ex)
+            {
+               throw new Exception();
+            }
+            finally
+            {
+
+            }
+        }
+        private List<Subject> Getvalue()
+        {
+            List<Subject> Course = new List<Subject>();
+            Subject input = new Subject();
+            input.ID = 1;
+            input.Name = "CSE";
+            Course.Add(input);
+            Subject input1 = new Subject();
+            input1.ID = 2;
+            input1.Name = "ACC";
+            Course.Add(input1);
+            Subject input2 = new Subject();
+            input2.ID = 3;
+            input2.Name = "ECE";
+            Course.Add(input2);
+
+            return Course;
+
         }
     }
 }
