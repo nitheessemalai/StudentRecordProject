@@ -19,17 +19,17 @@
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
                     <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" id="errName"class="text-danger"></span>
+                    <span asp-validation-for="Name" id="txtName"class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="DOB" class="control-label"></label>
                     <input asp-for="DOB" class="form-control" />
-                    <span asp-validation-for="DOB" id="errdob"class="text-danger"></span>
+                    <span asp-validation-for="DOB" id="txtdob"class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Age" class="control-label"></label>
                     <input asp-for="Age" class="form-control" />
-                    <span asp-validation-for="Age"id="errage" class="text-danger"></span>
+                    <span asp-validation-for="Age"id="txtage" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
@@ -46,17 +46,17 @@
                 <div class="form-group">
                     <label asp-for="Mobile" class="control-label"></label>
                     <input asp-for="Mobile" class="form-control" />
-                    <span asp-validation-for="Mobile" id="errMobile" class="text-danger"></span>
+                    <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Email" class="control-label"></label>
                     <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email"id="erremail" class="text-danger"></span>
+                    <span asp-validation-for="Email"id="txtemail" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Subject" class="control-label"></label>
-                    <select asp-for="Subject"  id="errSubject"class=" form-control"></select>  
-                    <span asp-validation-for="Subject" class="text-danger"></span>
+                    <select asp-for="Subject"  id="drpsub"class=" form-control"></select>  
+                    <span asp-validation-for="Subject"  id ="drpsubject"class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="button" value="Create" id="Create" class="btn btn-primary" />
@@ -91,7 +91,7 @@
                         string += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
                     }
 
-                    $("#errSubject").html(string);
+                    $("#drpsub").html(string);
                 }
             });
             
@@ -110,12 +110,12 @@
 
             var email = document.getElementById("Email").value;
 
-            //var subject = document.getElementById("Subject").value;
+            
 
 
             var isvalid = true;
             //name
-            var span = document.getElementById("errName");
+            var span = document.getElementById("txtName");
             if (name == "" || name.length == 0) {
                 span.innerText = "Please Enter Your Name";
                 span.style.display = "block";
@@ -128,7 +128,7 @@
            //age
 
 
-            var spanage = document.getElementById("errage");
+            var spanage = document.getElementById("txtage");
             if (age == "" || age <= 18 ) {
                 spanage.innerText = "Please Enter Your age";
                 spanage.style.display = "block";
@@ -140,7 +140,7 @@
             }
             //mobile
 
-            var nummobile = document.getElementById("errMobile");
+            var nummobile = document.getElementById("txtMobile");
             if (mobile === "" || !/^\d{10}$/.test(mobile)) {
                 nummobile .innerText = "Please enter a valid 10-digit phone number.";
                 nummobile .style.display = "block";
@@ -150,7 +150,7 @@
                 spanmobile.style.display = "none";
             }
             //email
-            var emailid = document.getElementById("erremail");
+            var emailid = document.getElementById("txtemail");
 
           
             if (email == "") {
@@ -162,11 +162,11 @@
                 email.style.display = "none";
             }
             //dob
-            var spandob = document.getElementById("errdob");
+            var spandob = document.getElementById("txtdob");
 
-            if (dob == "" || dob.length == 0 || dob == "01/01/0001")
+            if (dob == "" || dob.length == 0 || dob == "0001-01-01T00:00")
             {
-                spandob.innerText = "Date of Birth should ";
+                spandob.innerText = "Date of Birth  ";
                 spandob.style.display = "block";
                 isvalid = false;
             }
@@ -175,8 +175,27 @@
                 spandob.style.display = "none";
             }
           
+           
+
+            //Subject
+
+            var spansub = document.getElementById("drpsub");
+            var sub = spansub.options[spansub.selectedIndex].value;
+            var spansubject = document.getElementById("drpsubject");
+            if (sub == "" || sub == -1 || sub == 0)
+            {
+                spansub.style.borderColor = "red";
+                spansubject.innerText = "Please Enter Your Subject";
+                spansubject.style.display = "block";
+                isvalid = false;
+            }
+            else {
+                spansubject.style.borderColor = "black";
+                spansubject.style.display = "none";
+            }
             return isvalid;
         }
+
 
 
 

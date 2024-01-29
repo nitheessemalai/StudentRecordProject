@@ -28,11 +28,11 @@ namespace CogentApplication.Controllers
         }
 
         // GET: StudentController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int StudentID)
         {
             try
             {
-                var result = _add.GetbyID(id);
+                var result = _add.GetbyID(StudentID);
 
                 return View("Details", result);
 
@@ -50,6 +50,7 @@ namespace CogentApplication.Controllers
         {
 
             var model = new StudentDetails();
+            model.Gender = "Male";
             return View("Create", model);
         }
 
@@ -77,9 +78,9 @@ namespace CogentApplication.Controllers
         }
 
         // GET: StudentController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int StudentID)
         {
-            var result = _add.GetbyID(id);
+            var result = _add.GetbyID(StudentID);
             return View("Edit", result);
         }
 
@@ -109,9 +110,9 @@ namespace CogentApplication.Controllers
         }
 
         // GET: StudentController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int StudentID)
         {
-            var result = _add.GetbyID(id);
+            var result = _add.GetbyID(StudentID);
             return View("Delete", result) ;
         }
 
@@ -138,7 +139,7 @@ namespace CogentApplication.Controllers
             {
                 return View();
             }
-        }
+         }
         [HttpGet]
         [Route("~/api/Course")]
         public ActionResult Subject()
