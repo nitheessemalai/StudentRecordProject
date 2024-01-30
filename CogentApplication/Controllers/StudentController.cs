@@ -50,26 +50,26 @@ namespace CogentApplication.Controllers
         {
 
             var model = new StudentDetails();
-            model.Gender = "Male";
+        //    model.Gender = "Male";
             return View("Create", model);
         }
 
         // POST: StudentController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(StudentDetails stud)
+    //    [ValidateAntiForgeryToken]
+        public ActionResult Creates(StudentDetails stud)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
+               /* if (ModelState.IsValid)
+                {*/
                     _add.Insert(stud);
                     return RedirectToAction(nameof(List));
-                }
+             /*   }
                 else
                 {
                     return View("create", stud);
-                }
+                }*/
             }
             catch
             {

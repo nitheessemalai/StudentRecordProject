@@ -11,58 +11,62 @@
 <div class="row">
     <div class="col-md-4">
         @*<form name="create">*@
-            <form asp-action="create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input asp-for="StudentID" type="hidden" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" id="txtName"class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DOB" class="control-label"></label>
-                    <input asp-for="DOB" class="form-control" />
-                    <span asp-validation-for="DOB" id="txtdob"class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Age" class="control-label"></label>
-                    <input asp-for="Age" class="form-control" />
-                    <span asp-validation-for="Age"id="txtage" class="text-danger"></span>
-                </div>
+        <form asp-action="create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="StudentID" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" id="txtName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOB" class="control-label"></label>
+                <input asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" id="txtage" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control label col-md-2" })
+            <div class="radio-btn label">
+                <label>Gender</label>
+                <br />
 
-                    <div class="col-md-12">
+                <label for="radio">Male</label>
+                <input type="radio" name="radio" id="male" value="male">
+                <label for="radio">Female</label>
+                <input type="radio" name="radio" id="female" value="female">
+            </div>
+            <div>
+                <span asp-validation-for="Gender" id="gender-error" class="text-danger"></span>
 
-                        Male
-                        @Html.RadioButtonFor(model => model.Gender, "Male")
-                        Female
-                        @Html.RadioButtonFor(model => model.Gender, "Female")
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Mobile" class="control-label"></label>
-                    <input asp-for="Mobile" class="form-control" />
-                    <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email"id="txtemail" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Subject" class="control-label"></label>
-                    <select asp-for="Subject"  id="drpsub"class=" form-control"></select>  
-                    <span asp-validation-for="Subject"  id ="drpsubject"class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="button" value="Create" id="Create" class="btn btn-primary" />
+            </div>
+            
 
-                </div>
-            </form>
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" id="txtemail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <select asp-for="Subject" id="drpsub" class=" form-control"></select>
+                <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Create" id="Create" class="btn btn-primary" />
+
+            </div>
+        </form>
 </div>
 </div>
 
@@ -74,11 +78,54 @@
 
     <script>
 
-        $(document).ready(function () {
+       $(document).ready(function () {
 
             $("#Create").click(function () {
-                debugger;
-                validate();
+               
+
+                if (validate()) {
+                    var radios = document.getElementsByName("radio");
+                    var value = ""
+                    for (var i = 0, length = radios.length; i < length; i++) {
+                        if (gender[i].checked) {
+                            value = radios[i].value;
+                            break;
+                        }
+                    }
+
+
+                    var name = document.getElementById("Name").value;
+                    var mobile = document.getElementById("Mobile").value;
+                    var email = document.getElementById("Email").value;
+                    
+                    var dob = document.getElementById("DOB").value;
+                    var age = document.getElementById("Age").value;
+                    var subject = document.getElementById("drpsub");
+                    var values = subject.options[subject.selectedIndex].value;
+                    var postData = {
+                        "Name": name,
+                        "Mobile": mobile,
+                        "DOB": dob,
+                        "Age": age,
+                        "Gender": value,
+                        "Email": email,
+                        "Subject": values
+                    }
+
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Student/Creates",
+                        data: postData,
+                        success: function (data) {
+                            alert("Success");
+                        },
+                        error: function (ex) {
+                            alert("error");
+                        }
+                    });
+                }
             });
             $.ajax({
                 type: "GET",
@@ -94,6 +141,7 @@
                     $("#drpsub").html(string);
                 }
             });
+           
             
         });
 
@@ -147,7 +195,7 @@
                 isvalid = false;
             }
             else {
-                spanmobile.style.display = "none";
+                nummobile.style.display = "none";
             }
             //email
             var emailid = document.getElementById("txtemail");
@@ -159,7 +207,7 @@
                 isValid = false;
             }
             else {
-                email.style.display = "none";
+                emailid.style.display = "none";
             }
             //dob
             var spandob = document.getElementById("txtdob");
@@ -184,7 +232,7 @@
             var spansubject = document.getElementById("drpsubject");
             if (sub == "" || sub == -1 || sub == 0)
             {
-                spansub.style.borderColor = "red";
+               // spansub.style.borderColor = "red";
                 spansubject.innerText = "Please Enter Your Subject";
                 spansubject.style.display = "block";
                 isvalid = false;
@@ -193,6 +241,29 @@
                 spansubject.style.borderColor = "black";
                 spansubject.style.display = "none";
             }
+
+            var radios = document.getElementsByName("radio");
+            var value = ""
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (gender[i].checked) {
+                    value = radios[i].value;
+                    break;
+                }
+            }
+            var gender = document.getElementById("gender-error")
+            if (!value) {
+                gender.innerText = "Please select Your gender";
+                gender.style.display = "block";
+                isvalid = false;
+            }
+            else
+            {
+
+                gender.style.display = "none";
+
+            }
+              
+            
             return isvalid;
         }
 
