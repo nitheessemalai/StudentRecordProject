@@ -18,17 +18,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" placeholder="Enter you Name " />
                 <span asp-validation-for="Name" id="txtName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DOB" class="control-label"></label>
-                <input asp-for="DOB" class="form-control" />
+                <input asp-for="DOB"  id="DateofBirth"class="form-control"/>
                 <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
+                <input asp-for="Age" class="form-control" placeholder="Enter you Age " />
                 <span asp-validation-for="Age" id="txtage" class="text-danger"></span>
             </div>
 
@@ -49,17 +49,17 @@
 
             <div class="form-group">
                 <label asp-for="Mobile" class="control-label"></label>
-                <input asp-for="Mobile" class="form-control" />
+                <input asp-for="Mobile" class="form-control" placeholder="Enter you MobileNumber "/>
                 <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" placeholder="Enter you Email"/>
                 <span asp-validation-for="Email" id="txtemail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Subject" class="control-label"></label>
-                <select asp-for="Subject" id="drpsub" class=" form-control"></select>
+                <select asp-for="Subject" id="drpsub" class=" form-control"placeholder="select you subject"></select>
                 <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -80,18 +80,13 @@
 
        $(document).ready(function () {
 
-            $("#Create").click(function () {
+           $("#Create").click(function ()
+           {
+               
                
 
                 if (validate()) {
-                    var radios = document.getElementsByName("radio");
-                    var value = ""
-                    for (var i = 0, length = radios.length; i < length; i++) {
-                        if (gender[i].checked) {
-                            value = radios[i].value;
-                            break;
-                        }
-                    }
+                   
 
 
                     var name = document.getElementById("Name").value;
@@ -102,12 +97,20 @@
                     var age = document.getElementById("Age").value;
                     var subject = document.getElementById("drpsub");
                     var values = subject.options[subject.selectedIndex].value;
+                    var radios = document.getElementsByName("radio");
+                    var value1 = ""
+                    for (var i = 0, length = radios.length; i < length; i++) {
+                        if (radios[i].checked) {
+                            value1 = radios[i].value;
+                            break;
+                        }
+                    }
                     var postData = {
                         "Name": name,
                         "Mobile": mobile,
                         "DOB": dob,
                         "Age": age,
-                        "Gender": value,
+                        "Gender": value1,
                         "Email": email,
                         "Subject": values
                     }
@@ -119,7 +122,8 @@
                         url: "/Student/Creates",
                         data: postData,
                         success: function (data) {
-                            alert("Success");
+                            //alert("Success");
+                            window.location.href ="/Student/List"
                         },
                         error: function (ex) {
                             alert("error");
@@ -241,17 +245,18 @@
                 spansubject.style.borderColor = "black";
                 spansubject.style.display = "none";
             }
-
+            //Gender
             var radios = document.getElementsByName("radio");
-            var value = ""
+            var genders = ""
             for (var i = 0, length = radios.length; i < length; i++) {
-                if (gender[i].checked) {
-                    value = radios[i].value;
+                if (radios[i].checked) {
+                    genders = radios[i].value;
                     break;
                 }
             }
+
             var gender = document.getElementById("gender-error")
-            if (!value) {
+            if (!genders) {
                 gender.innerText = "Please select Your gender";
                 gender.style.display = "block";
                 isvalid = false;
@@ -266,6 +271,13 @@
             
             return isvalid;
         }
+       //DateofBirth picker
+        $('#DateofBirth').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+       
 
 
 
