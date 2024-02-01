@@ -9,6 +9,11 @@ namespace EFDataAccessLayer
 {
    public class StudentDetails
     {
+        //public StudentDetails()
+        //{
+        //    DOB = DateTime.Now;
+
+        //}
         [Key]
 
         public int StudentID { get; set;}

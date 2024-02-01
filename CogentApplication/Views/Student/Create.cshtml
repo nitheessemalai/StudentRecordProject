@@ -23,50 +23,51 @@
             </div>
             <div class="form-group">
                 <label asp-for="DOB" class="control-label"></label>
-                <input asp-for="DOB"  id="DateofBirth"class="form-control"/>
-                <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" placeholder="Enter you Age " />
-                <span asp-validation-for="Age" id="txtage" class="text-danger"></span>
-            </div>
+                    <input id="hdnDateofBirth" asp-for="DOB" type="hidden" class="form-control" />
+                    <input asp-for="DOB" type="text" class="form-control" />
+                    <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" placeholder="Enter you Age " />
+                    <span asp-validation-for="Age" id="txtage" class="text-danger"></span>
+                </div>
 
-            <div class="radio-btn label">
-                <label>Gender</label>
-                <br />
+                <div class="radio-btn label">
+                    <label>Gender</label>
+                    <br />
 
-                <label for="radio">Male</label>
-                <input type="radio" name="radio" id="male" value="male">
-                <label for="radio">Female</label>
-                <input type="radio" name="radio" id="female" value="female">
-            </div>
-            <div>
-                <span asp-validation-for="Gender" id="gender-error" class="text-danger"></span>
+                    <label for="radio">Male</label>
+                    <input type="radio" name="radio" id="male" value="male">
+                    <label for="radio">Female</label>
+                    <input type="radio" name="radio" id="female" value="female">
+                </div>
+                <div>
+                    <span asp-validation-for="Gender" id="gender-error" class="text-danger"></span>
 
-            </div>
-            
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Mobile" class="control-label"></label>
-                <input asp-for="Mobile" class="form-control" placeholder="Enter you MobileNumber "/>
-                <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" placeholder="Enter you Email"/>
-                <span asp-validation-for="Email" id="txtemail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Subject" class="control-label"></label>
-                <select asp-for="Subject" id="drpsub" class=" form-control"placeholder="select you subject"></select>
-                <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="button" value="Create" id="Create" class="btn btn-primary" />
 
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="Mobile" class="control-label"></label>
+                    <input asp-for="Mobile" class="form-control" placeholder="Enter you MobileNumber " />
+                    <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter you Email" />
+                    <span asp-validation-for="Email" id="txtemail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Subject" class="control-label"></label>
+                    <select asp-for="Subject" id="drpsub" class=" form-control" placeholder="select you subject"></select>
+                    <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" value="Create" id="Create" class="btn btn-primary" />
+
+                </div>
+</form>
 </div>
 </div>
 
@@ -80,9 +81,32 @@
 
        $(document).ready(function () {
 
+           //DateofBirth picker
+          
+           $('#DOB').daterangepicker({  
+               singleDatePicker: true,
+               showDropdowns: true,
+               autoApply: true,
+               autoUpdateInput: true,
+               minYear: 1980,
+               maxYear: parseInt(moment().format('YYYY'), 10) + 2
+           }, function (start, end, label) {
+             var years = moment().diff(start, 'years');
+           //    alert("You are " + years + " years old!");
+           });
+
+
+           //Date range picker with time picker
+           $('#DOB').on('apply.daterangepicker', function (ev, picker) {
+
+               $('#hdnDOB').val($('#DOB').val());
+           });
+           $("#DOB").on('change keyup paste mouseup', function () {
+               $('#hdnDateofBirth').val($('#DateofBirth').val());
+           });
            $("#Create").click(function ()
            {
-               
+              
                
 
                 if (validate()) {
@@ -203,8 +227,9 @@
             }
             //email
             var emailid = document.getElementById("txtemail");
+            //var emailformat = /^([a-z0-9_.])+&#64;([a-z])+\.([a-z])+$/
 
-          
+          //  if (emailformat.test(email))
             if (email == "") {
                 emailid.innerText = "Please Enter a Valid Email Address";
                 emailid.style.display = "block";
@@ -270,15 +295,11 @@
               
             
             return isvalid;
+           
+            
         }
-       //DateofBirth picker
-        $('#DateofBirth').daterangepicker({
-                opens: 'left'
-            }, function (start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            });
-       
 
+      
 
 
 
