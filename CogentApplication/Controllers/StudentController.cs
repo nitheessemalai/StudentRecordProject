@@ -46,30 +46,42 @@ namespace CogentApplication.Controllers
         }
 
         // GET: StudentController/Create
-        public ActionResult Create()
+        public ActionResult Create(int? studentID)
         {
-
-            var model = new StudentDetails();
-        //    model.Gender = "Male";
-            return View("Create", model);
+            if (studentID.HasValue)
+            {
+                var student = _add.GetbyID(studentID.Value);
+                return View("Create", student);
+            }
+            else
+            {
+                var model = new StudentDetails();
+                return View("Create", model);
+            }
+           
         }
 
         // POST: StudentController/Create
         [HttpPost]
-    //    [ValidateAntiForgeryToken]
-        public ActionResult Creates(StudentDetails stud)
+        //    [ValidateAntiForgeryToken]
+        public ActionResult Creates(StudentDetails value)
         {
             try
             {
-               /* if (ModelState.IsValid)
-                {*/
-                    _add.Insert(stud);
+              
+                if(value.StudentID == 0)
+                {
+                    _add.Insert(value);
                     return RedirectToAction(nameof(List));
-             /*   }
+
+
+                }
                 else
                 {
-                    return View("create", stud);
-                }*/
+                    _add.Update(value.StudentID,value);
+                    return RedirectToAction(nameof(List));
+                }
+
             }
             catch
             {

@@ -67,7 +67,7 @@
                 @Html.DisplayFor(modelItem => item.Subject)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { StudentID = item.StudentID }) |
+                @Html.ActionLink("Edit", "Create", new { StudentID = item.StudentID }) |
                 @Html.ActionLink("Details", "Details", new {  StudentID=item.StudentID  }) |
                 @Html.ActionLink("Delete", "Delete", new {  StudentID=item.StudentID  })
             </td>

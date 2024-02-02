@@ -2,6 +2,14 @@
 
 @{
     ViewData["Title"] = "Create";
+
+}
+@{ 
+    var New = "Create";
+    if (Model.StudentID > 0)
+    {
+        New = "Update";
+    }
 }
 
 <h1>Create</h1>
@@ -11,7 +19,7 @@
 <div class="row">
     <div class="col-md-4">
         @*<form name="create">*@
-        <form asp-action="create">
+        <form >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="StudentID" type="hidden" class="form-control" />
@@ -23,8 +31,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="DOB" class="control-label"></label>
-                    <input id="hdnDateofBirth" asp-for="DOB" type="hidden" class="form-control" />
                     <input asp-for="DOB" type="text" class="form-control" />
+                   <input asp-for="StudentID" type="hidden" id="StudentID" />
                     <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -34,13 +42,13 @@
                 </div>
 
                 <div class="radio-btn label">
-                    <label>Gender</label>
+                    <label asp-for="Gender">Gender</label>
                     <br />
 
-                    <label for="radio">Male</label>
-                    <input type="radio" name="radio" id="male" value="male">
-                    <label for="radio">Female</label>
-                    <input type="radio" name="radio" id="female" value="female">
+                    <label asp-for="Gender" for="radio">Male</label>
+                    <input asp-for="Gender" type="radio" name="radio" id="male" value="male">
+                    <label asp-for="Gender" for="radio">Female</label>
+                    <input asp-for="Gender" type="radio" name="radio" id="female" value="female">
                 </div>
                 <div>
                     <span asp-validation-for="Gender" id="gender-error" class="text-danger"></span>
@@ -60,11 +68,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Subject" class="control-label"></label>
+                    <input type="hidden" asp-for="Subject" id="hdnsub" />
                     <select asp-for="Subject" id="drpsub" class=" form-control" placeholder="select you subject"></select>
                     <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="button" value="Create" id="Create" class="btn btn-primary" />
+                    <input type="button"  id="Create" value="@New" class="btn btn-primary" />
 
                 </div>
 </form>
@@ -96,7 +105,7 @@
            });
 
 
-           //Date range picker with time picker
+           ////Date range picker with time picker
            $('#DOB').on('apply.daterangepicker', function (ev, picker) {
 
                $('#hdnDOB').val($('#DOB').val());
@@ -116,7 +125,7 @@
                     var name = document.getElementById("Name").value;
                     var mobile = document.getElementById("Mobile").value;
                     var email = document.getElementById("Email").value;
-                    
+                    var studentID = document.getElementById("StudentID").value;
                     var dob = document.getElementById("DOB").value;
                     var age = document.getElementById("Age").value;
                     var subject = document.getElementById("drpsub");
@@ -125,6 +134,8 @@
                     var value1 = ""
                     for (var i = 0, length = radios.length; i < length; i++) {
                         if (radios[i].checked) {
+
+
                             value1 = radios[i].value;
                             break;
                         }
@@ -136,7 +147,10 @@
                         "Age": age,
                         "Gender": value1,
                         "Email": email,
-                        "Subject": values
+                        "Subject": values,
+                        "StudentID ": studentID,
+
+
                     }
 
 
@@ -167,6 +181,7 @@
                     }
 
                     $("#drpsub").html(string);
+                    $("#drpsub").val($("#hdnsub").val());
                 }
             });
            
@@ -185,6 +200,8 @@
             var mobile = document.getElementById("Mobile").value;
 
             var email = document.getElementById("Email").value;
+            //var mailformat = new RegExp("^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@@[a-zA-Z0-9-]+(.[a-zA-Z0-9-]+)$");
+            var mailformat = new RegExp(/^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/);
 
             
 
@@ -226,17 +243,17 @@
                 nummobile.style.display = "none";
             }
             //email
-            var emailid = document.getElementById("txtemail");
-            //var emailformat = /^([a-z0-9_.])+&#64;([a-z])+\.([a-z])+$/
 
-          //  if (emailformat.test(email))
-            if (email == "") {
-                emailid.innerText = "Please Enter a Valid Email Address";
-                emailid.style.display = "block";
-                isValid = false;
+            var spanemail = document.getElementById("txtemail");
+
+
+            if (!(mailformat.test(email))) {
+                spanemail.innerText = "Please Enter Valid Email Address";
+                spanemail.style.display = "block";
+                isvalid = false;
             }
             else {
-                emailid.style.display = "none";
+                spanemail.style.display = "none";
             }
             //dob
             var spandob = document.getElementById("txtdob");
