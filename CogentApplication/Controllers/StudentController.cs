@@ -51,6 +51,7 @@ namespace CogentApplication.Controllers
             if (studentID.HasValue)
             {
                 var student = _add.GetbyID(studentID.Value);
+                student.DOB = DateTime.Now;
                 return View("Create", student);
             }
             else
