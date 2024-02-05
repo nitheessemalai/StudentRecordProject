@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label asp-for="DOB" class="control-label"></label>
                     <input asp-for="DOB" type="text" class="form-control" />
-                   <input asp-for="StudentID" type="hidden" id="StudentID" />
+                   <input asp-for="StudentID" type="hidden" id="StudentID" />                                           
                     <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -90,29 +90,7 @@
 
        $(document).ready(function () {
 
-           //DateofBirth picker
-          
-           $('#DOB').daterangepicker({  
-               singleDatePicker: true,
-               showDropdowns: true,
-               autoApply: true,
-               autoUpdateInput: true,
-               minYear: 1980,
-               maxYear: parseInt(moment().format('YYYY'), 10) + 2
-           }, function (start, end, label) {
-             var years = moment().diff(start, 'years');
-           //    alert("You are " + years + " years old!");
-           });
-
-
-           ////Date range picker with time picker
-           $('#DOB').on('apply.daterangepicker', function (ev, picker) {
-
-               $('#hdnDOB').val($('#DOB').val());
-           });
-           $("#DOB").on('change keyup paste mouseup', function () {
-               $('#hdnDateofBirth').val($('#DateofBirth').val());
-           });
+         
            $("#Create").click(function ()
            {
               
@@ -184,6 +162,29 @@
                     $("#drpsub").val($("#hdnsub").val());
                 }
             });
+           //DateofBirth picker
+
+           $('#DOB').daterangepicker({
+               singleDatePicker: true,
+               showDropdowns: true,
+               autoApply: true,
+               autoUpdateInput: true,
+               minYear: 1980,
+               maxYear: parseInt(moment().format('YYYY'), 10) + 2
+           }, function (start, end, label) {
+               var years = moment().diff(start, 'years');
+               //    alert("You are " + years + " years old!");
+           });
+
+
+           ////Date range picker with time picker
+           $('#DOB').on('apply.daterangepicker', function (ev, picker) {
+
+               $('#hdnDOB').val($('#DOB').val());
+           });
+           $("#DOB").on('change keyup paste mouseup', function () {
+               $('#hdnDateofBirth').val($('#DateofBirth').val());
+           });
            
             
         });

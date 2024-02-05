@@ -131,15 +131,15 @@ namespace CogentApplication.Controllers
 
         // POST: StudentController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Deletebyid(int StudentID)
+     //   [ValidateAntiForgeryToken]
+        public ActionResult Deletebyid(int id)
         {
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                    _add.Delete(StudentID);
+                    _add.Delete(id);
 
                     return RedirectToAction(nameof(List));
                 }
