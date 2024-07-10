@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 
 }
-@{ 
+@{
     var New = "Create";
     if (Model.StudentID > 0)
     {
@@ -12,14 +12,15 @@
     }
 }
 
-<h1>Create</h1>
+<h1>@New</h1>
 
 <h4>StudentDetails</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         @*<form name="create">*@
-        <form >
+        <form>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input asp-for="StudentID" type="hidden" class="form-control" />
@@ -31,53 +32,54 @@
             </div>
             <div class="form-group">
                 <label asp-for="DOB" class="control-label"></label>
-                    <input asp-for="DOB" type="text" class="form-control" />
-                   <input asp-for="StudentID" type="hidden" id="StudentID" />                                           
-                    <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Age" class="control-label"></label>
-                    <input asp-for="Age" class="form-control" placeholder="Enter you Age " />
-                    <span asp-validation-for="Age" id="txtage" class="text-danger"></span>
-                </div>
+                <input asp-for="DOB" type="text" class="form-control" />
+                <input id="hdnDOB" asp-for="DOB" type="hidden" class="form-control" />
+                @*<input asp-for="StudentID" type="hidden" id="StudentID" />*@
+                <span asp-validation-for="DOB" id="txtdob" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" placeholder="Enter you Age " />
+                <span asp-validation-for="Age" id="txtage" class="text-danger"></span>
+            </div>
 
-                <div class="radio-btn label">
-                    <label asp-for="Gender">Gender</label>
-                    <br />
+            <div class="radio-btn label">
+                <label asp-for="Gender">Gender</label>
+                <br />
 
-                    <label asp-for="Gender" for="radio">Male</label>
-                    <input asp-for="Gender" type="radio" name="radio" id="male" value="male">
-                    <label asp-for="Gender" for="radio">Female</label>
-                    <input asp-for="Gender" type="radio" name="radio" id="female" value="female">
-                </div>
-                <div>
-                    <span asp-validation-for="Gender" id="gender-error" class="text-danger"></span>
+                <label asp-for="Gender" for="radio">Male</label>
+                <input asp-for="Gender" type="radio" name="radio" id="male" value="male">
+                <label asp-for="Gender" for="radio">Female</label>
+                <input asp-for="Gender" type="radio" name="radio" id="female" value="female">
+            </div>
+            <div>
+                <span asp-validation-for="Gender" id="gender-error" class="text-danger"></span>
 
-                </div>
+            </div>
 
 
-                <div class="form-group">
-                    <label asp-for="Mobile" class="control-label"></label>
-                    <input asp-for="Mobile" class="form-control" placeholder="Enter you MobileNumber " />
-                    <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" placeholder="Enter you Email" />
-                    <span asp-validation-for="Email" id="txtemail" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Subject" class="control-label"></label>
-                    <input type="hidden" asp-for="Subject" id="hdnsub" />
-                    <select asp-for="Subject" id="drpsub" class=" form-control" placeholder="select you subject"></select>
-                    <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="button"  id="Create" value="@New" class="btn btn-primary" />
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" placeholder="Enter you MobileNumber " />
+                <span asp-validation-for="Mobile" id="txtMobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="Enter you Email" />
+                <span asp-validation-for="Email" id="txtemail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input type="hidden" asp-for="Subject" id="hdnsub" />
+                <select asp-for="Subject" id="drpsub" class=" form-control" placeholder="select you subject"></select>
+                <span asp-validation-for="Subject" id="drpsubject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" id="Create" value="@New" class="btn btn-primary" />
 
-                </div>
-</form>
-</div>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div>
@@ -88,16 +90,15 @@
 
     <script>
 
-       $(document).ready(function () {
+        $(document).ready(function () {
 
-         
-           $("#Create").click(function ()
-           {
-              
-               
+
+            $("#Create").click(function () {
+
+
 
                 if (validate()) {
-                   
+
 
 
                     var name = document.getElementById("Name").value;
@@ -118,6 +119,19 @@
                             break;
                         }
                     }
+                    //var spansub = document.getElementById("drpsub");
+                    //var sub = spansub.options[spansub.selectedIndex].value;
+                    //var spansubject = document.getElementById("drpsubject");
+                    //if (sub == "" || sub == -1 || sub == 0) {
+                    //    // spansub.style.borderColor = "red";
+                    //    spansubject.innerText = "Please Enter Your Subject";
+                    //    spansubject.style.display = "block";
+                    //    isvalid = false;
+                    //}
+                    //else {
+                    //    spansubject.style.borderColor = "black";
+                    //    spansubject.style.display = "none";
+                    //}
                     var postData = {
                         "Name": name,
                         "Mobile": mobile,
@@ -130,7 +144,7 @@
 
 
                     }
-
+                    
 
 
                     $.ajax({
@@ -139,7 +153,7 @@
                         data: postData,
                         success: function (data) {
                             //alert("Success");
-                            window.location.href ="/Student/List"
+                            window.location.href = "/Student/List"
                         },
                         error: function (ex) {
                             alert("error");
@@ -147,46 +161,46 @@
                     });
                 }
             });
+            debugger
             $.ajax({
                 type: "GET",
                 url: "/api/Course",
                 data: "{}",
                 success: function (data) {
                     var string = '<option value="-1">--- Please Select ---</option>';
-                    for (var i = 0; i < data.length; i++)
-                    {
+                    for (var i = 0; i < data.length; i++) {
                         string += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
                     }
-
+                    debugger
                     $("#drpsub").html(string);
                     $("#drpsub").val($("#hdnsub").val());
                 }
             });
-           //DateofBirth picker
+            //DateofBirth picker
 
-           $('#DOB').daterangepicker({
-               singleDatePicker: true,
-               showDropdowns: true,
-               autoApply: true,
-               autoUpdateInput: true,
-               minYear: 1980,
-               maxYear: parseInt(moment().format('YYYY'), 10) + 2
-           }, function (start, end, label) {
-               var years = moment().diff(start, 'years');
-               //    alert("You are " + years + " years old!");
-           });
+            $('#DOB').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                autoApply: true,
+                autoUpdateInput: true,
+                minYear: 1980,
+                maxYear: parseInt(moment().format('YYYY'), 10) + 2
+            }, function (start, end, label) {
+                var years = moment().diff(start, 'years');
+                //    alert("You are " + years + " years old!");
+            });
 
 
-           ////Date range picker with time picker
-           $('#DOB').on('apply.daterangepicker', function (ev, picker) {
+            ////Date range picker with time picker
+            $('#DOB').on('apply.daterangepicker', function (ev, picker) {
 
-               $('#hdnDOB').val($('#DOB').val());
-           });
-           $("#DOB").on('change keyup paste mouseup', function () {
-               $('#hdnDateofBirth').val($('#DateofBirth').val());
-           }); 
-           
-            
+                $('#hdnDOB').val($('#DOB').val());
+            });
+            $("#DOB").on('change keyup paste mouseup', function () {
+                $('#hdnDOB').val($('#DOB').val());
+            });
+
+
         });
 
 
@@ -204,7 +218,7 @@
             //var mailformat = new RegExp("^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@@[a-zA-Z0-9-]+(.[a-zA-Z0-9-]+)$");
             var mailformat = new RegExp(/^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/);
 
-            
+
 
 
             var isvalid = true;
@@ -219,11 +233,11 @@
             else {
                 span.style.display = "none";
             }
-           //age
+            //age
 
 
             var spanage = document.getElementById("txtage");
-            if (age == "" || age <= 18 ) {
+            if (age == "" || age <= 18) {
                 spanage.innerText = "Please Enter Your age";
                 spanage.style.display = "block";
 
@@ -236,8 +250,8 @@
 
             var nummobile = document.getElementById("txtMobile");
             if (mobile === "" || !/^\d{10}$/.test(mobile)) {
-                nummobile .innerText = "Please enter a valid 10-digit phone number.";
-                nummobile .style.display = "block";
+                nummobile.innerText = "Please enter a valid 10-digit phone number.";
+                nummobile.style.display = "block";
                 isvalid = false;
             }
             else {
@@ -259,27 +273,24 @@
             //dob
             var spandob = document.getElementById("txtdob");
 
-            if (dob == "" || dob.length == 0 || dob == "0001-01-01T00:00")
-            {
+            if (dob == "" || dob.length == 0 || dob == "0001-01-01T00:00") {
                 spandob.innerText = "Date of Birth  ";
                 spandob.style.display = "block";
                 isvalid = false;
             }
-            else
-            {
+            else {
                 spandob.style.display = "none";
             }
-          
-           
+
+
 
             //Subject
 
             var spansub = document.getElementById("drpsub");
             var sub = spansub.options[spansub.selectedIndex].value;
             var spansubject = document.getElementById("drpsubject");
-            if (sub == "" || sub == -1 || sub == 0)
-            {
-               // spansub.style.borderColor = "red";
+            if (sub == "" || sub == -1 || sub == 0) {
+                // spansub.style.borderColor = "red";
                 spansubject.innerText = "Please Enter Your Subject";
                 spansubject.style.display = "block";
                 isvalid = false;
@@ -304,24 +315,132 @@
                 gender.style.display = "block";
                 isvalid = false;
             }
-            else
-            {
+            else {
 
                 gender.style.display = "none";
 
             }
-              
-            
+
+
             return isvalid;
-           
-            
+
+
         }
 
-      
 
 
 
 
-    </script>    
+
+    </script>
 
 }
+@*@section Scripts {
+
+        <script>
+
+            $(document).ready(function () {
+
+
+                $("#Save").click(function () {
+
+
+
+                    if (validate()) {
+
+
+
+                        var name = document.getElementById("AssetName").value;
+                        var Type = document.getElementById("AssetType").value;
+                        var description = document.getElementById("Description").value;
+                        var assetID = document.getElementById("AssetID").value;
+                        var isActive = document.getElementById("IsActive").value;
+
+                        var postData = {
+                            "AssetName": name,
+                            "AssetType": Type,
+                            "Description": description,
+                            "AssetID ": assetID,
+                            "IsActive": isActive,
+
+                        }
+
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/AssetDetails/Save",
+                            data: postData,
+                            success: function (data) {
+                                //alert("Success");
+                                window.location.href = "/AssetDetails/Index"
+                            },
+                            error: function (ex) {
+                                alert("error");
+                            }
+                        });
+                    }
+                });
+
+
+
+                function validate() {
+
+                    var name = document.getElementById("AssetName").value;
+                    var Type = document.getElementById("AssetType").value;
+                    var description = document.getElementById("Description").value;
+                    var isActive = document.getElementById("IsActive").value;
+
+
+
+                    var isvalid = true;
+                    //name
+                    var span = document.getElementById("txtName");
+                    if (name == "" || name.length == 0) {
+                        span.innerText = "Please Enter Your Name";
+                        span.style.display = "block";
+
+                        isvalid = false;
+                    }
+                    else {
+                        span.style.display = "none";
+                    }
+                    //Type
+
+
+                    var spanType = document.getElementById("txtType");
+                    if (Type == "" || Type.length == 0) {
+                        spanType.innerText = "Please Enter Your Type";
+                        spanType.style.display = "block";
+
+                        isvalid = false;
+                    }
+                    else {
+                        spanage.style.display = "none";
+                    }
+                    //
+
+                    var namedescription = document.getElementById("txtDescription");
+                    if (description == "" || description.length == 0) {
+                        namedescription.innerText = "Please Enter Your Name";
+                        namedescription.style.display = "block";
+
+                        isvalid = false;
+                    }
+                    else {
+                        nummobile.style.display = "none";
+                    }
+
+                    return isvalid;
+
+
+                }
+          <input type="hidden" asp-for="AssetType" id="hdnAssetType" />
+                <select asp-for="AssetType" id="drpAssetType" class=" form-control" placeholder="select you subject"></select>
+
+
+
+        </script>
+
+    }*@
+

@@ -27,4 +27,8 @@
     <ProjectReference Include="..\StudentLibrary\EFDataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\NewFolder\" />
+  </ItemGroup>
+
 </Project>

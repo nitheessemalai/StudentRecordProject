@@ -46,11 +46,11 @@ namespace CogentApplication.Controllers
         }
 
         // GET: StudentController/Create
-        public ActionResult Create(int? studentID)
+        public ActionResult Create(int? id)
         {
-            if (studentID.HasValue)
+            if (id.HasValue)
             {
-                var student = _add.GetbyID(studentID.Value);
+                var student = _add.GetbyID(id.Value);
                 student.DOB = DateTime.Now;
                 return View("Create", student);
             }
